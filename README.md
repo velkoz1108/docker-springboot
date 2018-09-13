@@ -34,8 +34,7 @@ docker 构建插件 (三种插件 spotify  fabric8io  bibryam)
         <version>1.1.1</version>
         <configuration>
             <imageName>velkoz/velkoz-f5</imageName>
-            <dockerDiretory>${project.basedir}/src/main/docker</dockerDiretory>
-            <entryPoint>["java","-jar","/${project.build.finalName}.jar"]</entryPoint>
+            <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
             <resources>
                 <resource>
                     <targetPath>/</targetPath>
@@ -45,3 +44,9 @@ docker 构建插件 (三种插件 spotify  fabric8io  bibryam)
             </resources>
         </configuration>
     </plugin>
+    
+    
+
+### 第三种 执行mvn clean package时，就构建
+phase和goal可以这样理解： maven命令格式是：mvn phase:goal ,例如mvn package docker：build
+那么package和docker都是phase，build则是goal
