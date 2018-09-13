@@ -50,8 +50,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!--docker 构建插件 (三种插件 spotify  fabric8io  bibryam)-->
-            <plugin>
+            <!--方式1 docker 构建插件 (三种插件 spotify  fabric8io  bibryam)-->
+           <!-- <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.1.1</version>
@@ -67,7 +67,27 @@
                         </resource>
                     </resources>
                 </configuration>
+            </plugin>-->
+
+            <!--方式2 读取dockerfile-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <configuration>
+                    <imageName>velkoz/velkoz-f5</imageName>
+                    <dockerDiretory>${project.basedir}/src/main/docker</dockerDiretory>
+                    <entryPoint>["java","-jar","/${project.build.finalName}.jar"]</entryPoint>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
             </plugin>
+
         </plugins>
     </build>
 

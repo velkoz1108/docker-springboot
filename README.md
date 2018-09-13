@@ -1,37 +1,47 @@
-## Welcome to F5 Velkoz
+## docker 构建微服务
 
-You can use the [editor on GitHub](https://github.com/velkoz1108/null/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+### 第一种 在pom.xml中添加Docker插件
+docker 构建插件 (三种插件 spotify  fabric8io  bibryam)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+    <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>1.1.1</version>
+        <configuration>
+            <imageName>velkoz/velkoz-f5</imageName>
+            <baseImage>java</baseImage>
+            <entryPoint>["java","-jar","/${project.build.finalName}.jar"]</entryPoint>
+            <resources>
+                <resource>
+                    <targetPath>/</targetPath>
+                    <directory>${project.build.directory}</directory>
+                    <include>${project.build.finalName}.jar</include>
+                </resource>
+            </resources>
+        </configuration>
+    </plugin>
 
-### Markdown
+执行 mvn clean package docker:build
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+### 第二种 插件读取Dockerfile进行构建
+指定dockerfile文件路径
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/velkoz1108/null/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+    
+    <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>1.1.1</version>
+        <configuration>
+            <imageName>velkoz/velkoz-f5</imageName>
+            <dockerDiretory>${project.basedir}/src/main/docker</dockerDiretory>
+            <entryPoint>["java","-jar","/${project.build.finalName}.jar"]</entryPoint>
+            <resources>
+                <resource>
+                    <targetPath>/</targetPath>
+                    <directory>${project.build.directory}</directory>
+                    <include>${project.build.finalName}.jar</include>
+                </resource>
+            </resources>
+        </configuration>
+    </plugin>
