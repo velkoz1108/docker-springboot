@@ -120,3 +120,22 @@ pom.xml增加serverId配置 两处配置的id一致
         </plugin>
     
 执行 mvn clean package docker:build -DpushImage
+
+
+
+## docker-compose 
+安装 apt install docker-compose
+准备 app.jar
+编写 Dockerfile
+编写 docker-compose.yml 
+
+    
+    version: '2'  # 表示该docker-compose.yml文件使用的是version 2 file format
+    services:
+      velkoz:  # 指定服务名称
+        build: .  #执行Dockerfile所在路径
+        ports:
+           - "8080:8080"  # 指定端口映射，类似docker run的-p选项，注意使用字符串形式
+
+
+服务编排 
